@@ -5,12 +5,26 @@ import { wixClientServer } from "@/lib/wixClientserver";
 import Image from "next/image";
 import { Suspense } from "react";
 
-const ListPage = async ({ searchParams }: { searchParams: any }) => {
+async function getData(searchParams: { [key: string]: string | string[] }) {
   const wixClient = await wixClientServer();
-
+  const catSlug = Array.isArray(searchParams.cat)
+    ? searchParams.cat[0]
+    : searchParams.cat;
+  if (!catSlug) {
+    throw new Error("NULL_SEARCH_FIELD: 'cat' parameter is missing");
+  }
   const cat = await wixClient.collections.getCollectionBySlug(
-    searchParams.cat || "all-products"
+    catSlug || "all-products"
   );
+  return cat;
+}
+
+const ListPage = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] };
+}) => {
+  const cat = await getData(searchParams);
 
   return (
     <div className="px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative">
