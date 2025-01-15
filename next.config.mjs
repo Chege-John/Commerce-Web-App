@@ -6,6 +6,7 @@ const nextConfig = {
   images: {
     domains: ["images.pexels.com", "static.wixstatic.com"],
   },
+  output: "export",
 };
 
 export default nextConfig;

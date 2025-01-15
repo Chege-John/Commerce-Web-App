@@ -17,7 +17,7 @@ async function getData(catSlug: string) {
     return cat;
   } catch (error) {
     console.error("Error fetching data:", error);
-    throw new Error("categories: UNKNOWN");
+    return { collection: { name: "Default Category", _id: "default-id" } };
   }
 }
 
@@ -43,7 +43,9 @@ const ListPage = async ({ params }: { params: { cat: string } }) => {
         </div>
       </div>
       {/* FILTER */}
-      <Filter />
+      <Suspense fallback={<Skeleton />}>
+        <Filter />
+      </Suspense>
       {/* PRODUCTS */}
       <h1 className="mt-12 text-xl font-semibold">
         {cat?.collection?.name} For You!

@@ -4,6 +4,8 @@ import Link from "next/link";
 import DOMPurify from "isomorphic-dompurify";
 import Pagination from "./Pagination";
 import { wixClientServer } from "@/lib/wixClientserver";
+import { Suspense } from "react";
+import Skeleton from "./Skeleton";
 
 const PRODUCT_PER_PAGE = 8;
 
@@ -34,7 +36,6 @@ const ProductList = async ({
         ? parseInt(searchParams.page) * (limit || PRODUCT_PER_PAGE)
         : 0
     );
-  // .find();
 
   if (searchParams?.sort) {
     const [sortType, sortBy] = searchParams.sort.split(" ");
@@ -58,22 +59,25 @@ const ProductList = async ({
           key={product._id}
         >
           <div className="relative w-full h-80">
-            <Image
-              src={product.media?.mainMedia?.image?.url || "/product.png"}
-              alt=""
-              fill
-              sizes="25vw"
-              className="absolute object-cover rounded-md z-10 hover:opacity-0 transition-opacity easy duration-500"
-            />
-            {product.media?.items && (
+            {/* Suspense for the Image loading */}
+            <Suspense fallback={<Skeleton />}>
               <Image
-                src={product.media?.items[1]?.image?.url || "/product.png"}
+                src={product.media?.mainMedia?.image?.url || "/product.png"}
                 alt=""
                 fill
                 sizes="25vw"
-                className="absolute object-cover rounded-md"
+                className="absolute object-cover rounded-md z-10 hover:opacity-0 transition-opacity easy duration-500"
               />
-            )}
+              {product.media?.items && (
+                <Image
+                  src={product.media?.items[1]?.image?.url || "/product.png"}
+                  alt=""
+                  fill
+                  sizes="25vw"
+                  className="absolute object-cover rounded-md"
+                />
+              )}
+            </Suspense>
           </div>
           <div className="flex justify-between">
             <span className="font-medium">{product.name}</span>

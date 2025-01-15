@@ -19,7 +19,6 @@ const Filter = () => {
   return (
     <div className="mt-12 flex justify-between">
       <div className="flex gap-6 flex-wrap">
-        
         <input
           type="text"
           name="min"
@@ -44,7 +43,6 @@ const Filter = () => {
           <option value="">New Arrival</option>
           <option value="">Popular</option>
         </select>
-        
       </div>
       <div className="">
         <select
