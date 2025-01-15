@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+/*body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("https://assets.roomgpt.io/Homepage%20-%20Light.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top center;
+  z-index: -1; 
+*/
+body {
+  background: linear-gradient(to bottom, white, #f0faff);
+  min-height: 100vh;
+  margin: 0;
+}
+
+/* styles/globals.css */
+.navbar {
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb; /* Light border for separation */
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #374151; /* Gray color */
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #1f2937; /* Darker gray on hover */
+}
+
+.navbar .logo img {
+  width: 32px;
+  height: 32px;
+}
