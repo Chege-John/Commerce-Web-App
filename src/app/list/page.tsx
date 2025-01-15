@@ -7,10 +7,18 @@ import { Suspense } from "react";
 
 async function getData(catSlug: string) {
   const wixClient = await wixClientServer();
-  const cat = await wixClient.collections.getCollectionBySlug(
-    catSlug || "all-products"
-  );
-  return cat;
+  try {
+    const cat = await wixClient.collections.getCollectionBySlug(
+      catSlug || "all-products"
+    );
+    if (!cat || !cat.collection) {
+      throw new Error("categories: UNKNOWN");
+    }
+    return cat;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw new Error("categories: UNKNOWN");
+  }
 }
 
 const ListPage = async ({ params }: { params: { cat: string } }) => {
